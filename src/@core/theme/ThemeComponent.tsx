@@ -18,7 +18,7 @@ import themeOptions from './ThemeOptions';
 
 import GlobalStyling from './globalStyles';
 import themeConfig from '@src/lib/config/themeConfig';
-import UserThemeOptions from '../layout/UserThemeOptions';
+import UserThemeOptions from '@src/@core/theme/UserThemeOptions';
 
 interface Props {
   settings: Settings;

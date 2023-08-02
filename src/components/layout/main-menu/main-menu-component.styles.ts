@@ -30,7 +30,7 @@ export const MainContainer = styled.aside<AsideProps>`
   left: -999vw;
   height: calc(100vh - 5rem);
   z-index: 9999999;
-  width: 30rem;
+  width: 300px;
   background-color: blue;
 
   ${({ isOpen }) =>
@@ -42,7 +42,6 @@ export const MainContainer = styled.aside<AsideProps>`
 
   ${media.greaterThan('large')`
       left: 0;
-      width: 32rem; */
       max-width:70vw;
 
   `}
@@ -90,8 +89,7 @@ export const MainMenuItem = styled.div<AsideItemProps>`
     padding: 1rem 1rem 1rem 1rem;
     align-items: flex-start;
     justify-content: center;
-    width: 20rem;
-    max-width: 20rem;
+    width: 100%;
     ${marginLeft &&
     css`
       margin-left: ${marginLeft};
@@ -169,33 +167,6 @@ export const MainMenuItem = styled.div<AsideItemProps>`
                 display: none;
             }
         `}
-  `}
-`;
-export const OpenMenuContent = styled.div<OpenSearchMenuProps>`
-  ${({ isOpen, showOption, searchMenusLength }) => css`
-    position: fixed;
-    margin-left: ${isOpen ? 30 + 40 * searchMenusLength : 30}rem;
-    top: 17rem;
-    transition: margin-left 0.6s ease-in-out;
-    background-color: gray;
-    align-items: center;
-    justify-content: center;
-    height: 14px;
-    width: 32px;
-    height: 32px;
-    border-radius: 50px;
-    cursor: pointer;
-
-    display: ${showOption ? 'flex' : 'none'};
-    ${media.lessThan('large')`
-            display:none;
-        `}
-    img {
-      transform: ${isOpen ? 'rotate(180deg)' : ''};
-      filter: invert(100%) sepia(100%) saturate(1%) hue-rotate(309deg)
-        brightness(102%) contrast(101%);
-    }
-    z-index: 9999;
   `}
 `;
 

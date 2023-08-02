@@ -17,7 +17,7 @@ export const MainMenuComponent = ({
 }: MainMenuProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const { pathname } = useRouter();
-  console.log(isMobileMenuOpen);
+
   useEffect(() => {
     const handleOutsideClick = (e: any) => {
       if (isMobileMenuOpen && ref.current && !ref.current.contains(e.target)) {

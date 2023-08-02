@@ -1,33 +1,54 @@
-// ** React Import
-import { Children } from 'react';
-
-// ** Next Import
-import Document, { Html, Head, Main, NextScript } from 'next/document';
-
-// ** Emotion Imports
-import createEmotionServer from '@emotion/server/create-instance';
-
-// ** Utils Imports
-import { createEmotionCache } from 'src/@core/utils/create-emotion-cache';
+import Document, {
+  Html,
+  Head,
+  Main,
+  NextScript,
+  DocumentContext,
+  DocumentInitialProps,
+} from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 
-class CustomDocument extends Document {
+export default class MyDocument extends Document {
+  static async getInitialProps(
+    ctx: DocumentContext,
+  ): Promise<DocumentInitialProps> {
+    const sheet = new ServerStyleSheet();
+    const originalRenderPage = ctx.renderPage;
+
+    try {
+      ctx.renderPage = () =>
+        originalRenderPage({
+          enhanceApp: (App) =>
+            function enhance(props) {
+              return sheet.collectStyles(<App {...props} />);
+            },
+        });
+
+      const initialProps = await Document.getInitialProps(ctx);
+      return {
+        ...initialProps,
+        styles: [
+          <>
+            {initialProps.styles}
+            {sheet.getStyleElement()}
+          </>,
+        ],
+      };
+    } finally {
+      sheet.seal();
+    }
+  }
+
   render() {
     return (
-      <Html lang="en">
+      <Html lang="pt-BR">
         <Head>
-          <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link rel="preconnect" href="https://fonts.gstatic.com" />
+          <link rel="apple-touch-icon" href="/icon.png"></link>
           <link
+            href="https://fonts.googleapis.com/css?family=Poppins"
             rel="stylesheet"
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-          />
-          <link
-            rel="apple-touch-icon"
-            sizes="180x180"
-            href="/images/apple-touch-icon.png"
-          />
-          <link rel="shortcut icon" href="/images/favicon.png" />
+          ></link>
+          <meta name="theme-color" content="#fff" />
         </Head>
         <body>
           <Main />
@@ -37,38 +58,3 @@ class CustomDocument extends Document {
     );
   }
 }
-
-CustomDocument.getInitialProps = async (ctx) => {
-  const originalRenderPage = ctx.renderPage;
-  const cache = createEmotionCache();
-  const { extractCriticalToChunks } = createEmotionServer(cache);
-  ctx.renderPage = () =>
-    originalRenderPage({
-      enhanceApp: (App) => (props) =>
-        (
-          <App
-            {...props} // @ts-ignore
-            emotionCache={cache}
-          />
-        ),
-    });
-
-  const initialProps = await Document.getInitialProps(ctx);
-  const emotionStyles = extractCriticalToChunks(initialProps.html);
-  const emotionStyleTags = emotionStyles.styles.map((style) => {
-    return (
-      <style
-        key={style.key}
-        dangerouslySetInnerHTML={{ __html: style.css }}
-        data-emotion={`${style.key} ${style.ids.join(' ')}`}
-      />
-    );
-  });
-
-  return {
-    ...initialProps,
-    styles: [...Children.toArray(initialProps.styles), ...emotionStyleTags],
-  };
-};
-
-export default CustomDocument;
