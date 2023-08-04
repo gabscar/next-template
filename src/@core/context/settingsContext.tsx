@@ -2,51 +2,27 @@
 import { createContext, ReactNode, useEffect, useState } from 'react';
 
 import { Direction } from '@mui/material';
-import {
-  AppBar,
-  ContentWidth,
-  Footer,
-  Mode,
-  Skin,
-  ThemeColor,
-  VerticalNavToggle,
-} from '@core/layouts/types';
+import { Mode, Skin, ThemeColor } from '@core/layouts/types';
 import themeConfig from '@src/lib/config/themeConfig';
+import { DefaultTheme } from 'styled-components';
+import { light } from '../theme/config-theme/light';
 
 export type Settings = {
   skin: Skin;
   mode: Mode;
-  appBar?: AppBar;
-  footer?: Footer;
-  navHidden?: boolean;
-  appBarBlur: boolean;
-  direction: Direction;
-  navCollapsed: boolean;
   themeColor: ThemeColor;
-  contentWidth: ContentWidth;
+  theme: DefaultTheme;
 };
 
 export type PageSpecificSettings = {
   skin?: Skin;
   mode?: Mode;
-  appBar?: AppBar;
-  footer?: Footer;
+
   navHidden?: boolean; // navigation menu
   appBarBlur?: boolean;
   direction?: Direction;
   navCollapsed?: boolean;
   themeColor?: ThemeColor;
-  contentWidth?: ContentWidth;
-  layout?: 'vertical' | 'horizontal';
-  lastLayout?: 'vertical' | 'horizontal';
-  verticalNavToggleType?: VerticalNavToggle;
-  toastPosition?:
-    | 'top-left'
-    | 'top-center'
-    | 'top-right'
-    | 'bottom-left'
-    | 'bottom-center'
-    | 'bottom-right';
 };
 export type SettingsContextValue = {
   settings: Settings;
@@ -62,19 +38,7 @@ const initialSettings: Settings = {
   themeColor: 'primary',
   mode: themeConfig.mode,
   skin: themeConfig.skin,
-  footer: themeConfig.footer,
-
-  direction: themeConfig.direction,
-  navHidden: themeConfig.navHidden,
-  appBarBlur: themeConfig.appBarBlur,
-  navCollapsed: themeConfig.navCollapsed,
-  contentWidth: themeConfig.contentWidth,
-};
-
-const staticSettings = {
-  appBar: initialSettings.appBar,
-  footer: initialSettings.footer,
-  navHidden: initialSettings.navHidden,
+  theme: light,
 };
 
 const restoreSettings = (): Settings | null => {
@@ -83,7 +47,7 @@ const restoreSettings = (): Settings | null => {
   const storedData: string | null = window.localStorage.getItem('settings');
 
   if (storedData) {
-    settings = { ...JSON.parse(storedData), ...staticSettings };
+    settings = { ...JSON.parse(storedData) };
   } else {
     settings = initialSettings;
   }
@@ -93,10 +57,6 @@ const restoreSettings = (): Settings | null => {
 
 const storeSettings = (settings: Settings) => {
   const initSettings = Object.assign({}, settings);
-
-  delete initSettings.appBar;
-  delete initSettings.footer;
-  delete initSettings.navHidden;
 
   window.localStorage.setItem('settings', JSON.stringify(initSettings));
 };
@@ -125,12 +85,9 @@ export const SettingsProvider = ({
 
   useEffect(() => {
     if (settings.mode === 'semi-dark') {
-      saveSettings({ ...settings, mode: 'light' });
+      saveSettings({ ...settings, mode: 'light', theme: light });
     }
-    if (settings.appBar === 'hidden') {
-      saveSettings({ ...settings, appBar: 'fixed' });
-    }
-  }, []);
+  }, [settings.mode]);
 
   const saveSettings = (updatedSettings: Settings) => {
     storeSettings(updatedSettings);

@@ -1,13 +1,11 @@
 // ** Type Imports
 import { Skin } from '@core/layouts/types';
 import { PaletteMode } from '@mui/material';
+import { DefaultTheme } from 'styled-components';
 
-const DefaultPalette = (mode: PaletteMode, skin: Skin) => {
+const DefaultPalette = (mode: PaletteMode, skin: Skin, theme: DefaultTheme) => {
   // ** Vars
   const whiteColor = '#FFF';
-  const lightColor = '76, 78, 100';
-  const darkColor = '234, 234, 255';
-  const mainColor = mode === 'light' ? lightColor : darkColor;
 
   const defaultBgColor = () => {
     if (skin === 'bordered' && mode === 'light') {
@@ -21,15 +19,13 @@ const DefaultPalette = (mode: PaletteMode, skin: Skin) => {
 
   return {
     customColors: {
-      dark: darkColor,
-      main: mainColor,
-      light: lightColor,
-      darkBg: '#282A42',
-      lightBg: '#F7F7F9',
-      bodyBg: mode === 'light' ? '#F7F7F9' : '#282A42',
-      trackBg: mode === 'light' ? '#F2F2F4' : '#41435C',
-      tooltipBg: mode === 'light' ? '#262732' : '#464A65',
-      tableHeaderBg: mode === 'light' ? '#F5F5F7' : '#3A3E5B',
+      dark: theme.customColors.dark,
+      main: theme.customColors.main,
+      light: theme.customColors.light,
+      bodyBg: theme.customColors.bodyBg,
+      trackBg: theme.customColors.trackBg,
+      tooltipBg: theme.customColors.tooltipBg,
+      tableHeaderBg: theme.customColors.tableHeaderBg,
     },
     mode: mode,
     common: {
@@ -89,23 +85,23 @@ const DefaultPalette = (mode: PaletteMode, skin: Skin) => {
       A700: '#616161',
     },
     text: {
-      primary: `rgba(${mainColor}, 0.87)`,
-      secondary: `rgba(${mainColor}, 0.6)`,
-      disabled: `rgba(${mainColor}, 0.38)`,
+      primary: theme.text.primary,
+      secondary: theme.text.secondary,
+      disabled: theme.text.disabled,
     },
-    divider: `rgba(${mainColor}, 0.12)`,
+    divider: theme.customColors.divider,
     background: {
-      paper: mode === 'light' ? whiteColor : '#30334E',
+      paper: theme.customColors.appBackground,
       default: defaultBgColor(),
     },
     action: {
-      active: `rgba(${mainColor}, 0.54)`,
-      hover: `rgba(${mainColor}, 0.05)`,
-      hoverOpacity: 0.05,
-      selected: `rgba(${mainColor}, 0.08)`,
-      disabled: `rgba(${mainColor}, 0.26)`,
-      disabledBackground: `rgba(${mainColor}, 0.12)`,
-      focus: `rgba(${mainColor}, 0.12)`,
+      active: theme.action.active,
+      hover: theme.action.hover,
+      hoverOpacity: theme.action.hoverOpacity,
+      selected: theme.action.selected,
+      disabled: theme.action.disabled,
+      disabledBackground: theme.action.disabledBackground,
+      focus: theme.action.focus,
     },
   };
 };

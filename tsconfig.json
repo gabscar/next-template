@@ -22,7 +22,10 @@
       "@lib/*": ["./src/lib/*"],
       "@public/*": ["./public/*"],
       "@core/*": ["./src/@core/*"],
-      "@interfaces/*": ["./src/lib/interfaces/*"]
+      "@interfaces/*": ["./src/lib/interfaces/*"],
+      "@enums/*": ["./src/lib/enums/*"],
+      "@hooks/*": ["./src/lib/hooks/*"],
+      "@services/*": ["./src/lib/services/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

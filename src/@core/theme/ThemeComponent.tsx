@@ -9,17 +9,13 @@ import {
   ThemeProvider,
 } from '@mui/material/styles';
 import { deepmerge } from '@mui/utils';
-
 import { Settings } from '@core/context/settingsContext';
-
 import typography from './typography';
-
 import themeOptions from './ThemeOptions';
-
 import GlobalStyling from './globalStyles';
 import themeConfig from '@src/lib/config/themeConfig';
 import UserThemeOptions from '@src/@core/theme/UserThemeOptions';
-
+import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 interface Props {
   settings: Settings;
   children: ReactNode;
@@ -49,9 +45,11 @@ const ThemeComponent = (props: Props) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <GlobalStyles styles={() => GlobalStyling(theme) as any} />
-      {children}
+      <StyledThemeProvider theme={settings.theme}>
+        <CssBaseline />
+        <GlobalStyles styles={() => GlobalStyling(theme) as any} />
+        {children}
+      </StyledThemeProvider>
     </ThemeProvider>
   );
 };

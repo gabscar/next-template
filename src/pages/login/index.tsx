@@ -1,5 +1,5 @@
 import { UserRoles } from '@lib/enums/userRoles';
-import { LoginPage } from '@core/pages';
+import { LoginPage } from '@components/pages';
 
 const Home = () => {
   return <LoginPage />;

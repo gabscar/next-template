@@ -12,7 +12,7 @@ import shadows from './shadows';
 import breakpoints from './breakpoints';
 
 const themeOptions = (settings: Settings): ThemeOptions => {
-  const { skin, mode, direction, themeColor } = settings;
+  const { skin, mode, themeColor, theme } = settings;
 
   const userThemeConfig: any = Object.assign({}, UserThemeOptions());
 
@@ -23,8 +23,7 @@ const themeOptions = (settings: Settings): ThemeOptions => {
 
   const mergedThemeConfig = deepmerge(
     {
-      direction,
-      palette: palette(mode === 'semi-dark' ? 'light' : mode, skin),
+      palette: palette(mode === 'semi-dark' ? 'light' : mode, skin, theme),
       typography: {
         fontFamily:
           userFontFamily ||
