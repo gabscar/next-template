@@ -6,8 +6,8 @@ type ContentProps = {
 };
 
 export const NavbarWrapper = styled.div`
-  ${() => css`
-    background-color: blue;
+  ${({ theme }) => css`
+    background-color: ${theme.customColors.main};
     position: sticky;
     top: 0;
     z-index: 999;

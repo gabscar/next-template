@@ -23,27 +23,28 @@ type MenuBranchProps = {
   isSelected: boolean;
 };
 export const MainContainer = styled.aside<AsideProps>`
-  position: fixed;
-  bottom: 0;
+  ${({ isOpen, theme }) => css`
+    position: fixed;
+    bottom: 0;
 
-  height: 100vh;
-  left: -999vw;
-  height: calc(100vh - 5rem);
-  z-index: 9999999;
-  width: 300px;
-  background-color: blue;
+    height: 100vh;
+    left: -999vw;
+    height: calc(100vh - 5rem);
+    z-index: 9999999;
+    width: 300px;
+    background-color: ${theme.customColors.main};
 
-  ${({ isOpen }) =>
-    isOpen &&
+    ${isOpen &&
     css`
       transform: translateX(0);
       left: 0;
     `};
 
-  ${media.greaterThan('large')`
+    ${media.greaterThan('large')`
       left: 0;
       max-width:70vw;
 
+  `}
   `}
 `;
 
@@ -84,7 +85,7 @@ export const Divider = styled.div`
 `;
 
 export const MainMenuItem = styled.div<AsideItemProps>`
-  ${({ isFocused, marginLeft }) => css`
+  ${({ isFocused, marginLeft, theme }) => css`
     color: black;
     padding: 1rem 1rem 1rem 1rem;
     align-items: flex-start;

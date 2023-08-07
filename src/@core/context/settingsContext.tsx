@@ -18,10 +18,7 @@ export type PageSpecificSettings = {
   skin?: Skin;
   mode?: Mode;
 
-  navHidden?: boolean; // navigation menu
-  appBarBlur?: boolean;
   direction?: Direction;
-  navCollapsed?: boolean;
   themeColor?: ThemeColor;
 };
 export type SettingsContextValue = {
