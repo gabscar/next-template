@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 
 import * as S from './layout-styles';
-import { MainMenuComponent } from '../main-menu';
-import { Navbar } from '../navbar';
+import { MainMenuComponent } from './components/main-menu';
+import { Navbar } from './components/navbar';
 
 type LayoutProps = {
   children?: React.ReactNode;
 };
 
-export const Layout = ({ children }: LayoutProps) => {
+export const DashboardLayout = ({ children }: LayoutProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleMobileMenu = () => {

@@ -4,7 +4,6 @@ import { ReactElement, ReactNode, useEffect } from 'react';
 // ** Next Import
 import { useRouter } from 'next/router';
 import { useAuth } from '../context/auth/auth-provider';
-import { Layout } from '@components/layout/layout';
 
 // ** Hooks Import
 
@@ -33,7 +32,7 @@ const GuestGuard = (props: GuestGuardProps) => {
     return fallback;
   }
 
-  return <Layout>{children}</Layout>;
+  return <>{children}</>;
 };
 
 export default GuestGuard;

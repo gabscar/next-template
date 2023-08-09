@@ -1,16 +1,10 @@
 import LoginForm from '@src/components/forms/auth/login';
+import { AuthTemplateWrapper } from '@src/lib/layout';
 
 export const LoginPage = () => {
   return (
-    <div
-      style={{
-        marginTop: '50px',
-        backgroundColor: 'white',
-        width: '700px',
-        gap: '20px',
-      }}
-    >
+    <AuthTemplateWrapper title="Login">
       <LoginForm />
-    </div>
+    </AuthTemplateWrapper>
   );
 };

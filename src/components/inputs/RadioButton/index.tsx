@@ -7,8 +7,8 @@ import {
   RadioGroup,
 } from '@mui/material';
 import { Control, Controller, FieldPath, FieldValues } from 'react-hook-form';
-
-interface IRadioOptions {
+import * as S from './styles';
+export interface IRadioOptions {
   label: string;
   value?: string;
 }
@@ -22,6 +22,7 @@ interface ICreatableRadioProps<
   radioOptions: IRadioOptions[];
   newValueLabel?: string;
   label: string;
+  isInRow?: boolean;
 }
 
 type IBaseCreatableRadioProps<
@@ -42,27 +43,31 @@ export const FormInputRadio: ICreatableRadio = (props) => {
       <FormControlLabel
         value={singleOption.value}
         label={singleOption.label}
+        key={singleOption.label}
         control={<Radio />}
       />
     ));
   };
 
   return (
-    <FormControl component="fieldset">
-      <FormLabel component="legend">{props.label}</FormLabel>
-      <Controller
-        name={props.name}
-        control={props.control}
-        render={({
-          field: { onChange, value },
-          fieldState: { error },
-          formState,
-        }) => (
-          <RadioGroup value={value} onChange={onChange}>
-            {generateRadioOptions()}
-          </RadioGroup>
-        )}
-      />
-    </FormControl>
+    <S.RadioGroupWrapper>
+      <FormControl component="fieldset">
+        <FormLabel component="legend">{props.label}</FormLabel>
+        <Controller
+          name={props.name}
+          control={props.control}
+          render={({
+            field: { onChange, value },
+            fieldState: { error },
+            formState,
+          }) => (
+            <RadioGroup value={value} onChange={onChange} row={props.isInRow}>
+              {generateRadioOptions()}
+            </RadioGroup>
+          )}
+        />
+        {props.errorText ? <S.ErrorText>{props.errorText}</S.ErrorText> : <></>}
+      </FormControl>
+    </S.RadioGroupWrapper>
   );
 };

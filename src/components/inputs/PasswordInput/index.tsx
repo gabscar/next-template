@@ -13,7 +13,7 @@ import {
   FieldValues,
   Path,
 } from 'react-hook-form';
-
+import { AiFillEyeInvisible, AiFillEye } from 'react-icons/ai';
 interface IBaseTextFieldUniqueProps<
   T extends FieldValues,
   TName extends Path<T> = Path<T>,
@@ -21,6 +21,7 @@ interface IBaseTextFieldUniqueProps<
   control: Control<T, any>;
   name: FieldPath<T>;
   errorText?: string;
+  useExternalLabel?: boolean;
 }
 
 type IBaseTextFieldProps<
@@ -52,31 +53,47 @@ const PasswordInput: ICustomTextField = (props) => {
           name={props.name}
           render={({ field }) => {
             return (
-              <TextField
-                value={field.value}
-                onChange={field.onChange}
-                onBlur={field.onBlur}
-                type={showPassword ? 'text' : 'password'}
-                error={Boolean(props?.errorText)}
-                helperText={props?.errorText}
-                InputProps={{
-                  autoComplete: 'off',
-
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton
-                        edge="end"
-                        onMouseDown={handleMouseDown}
-                        onMouseUp={handleMouseDown}
-                        onClick={togglePasswordVisibility}
-                      >
-                        teste
-                      </IconButton>
-                    </InputAdornment>
-                  ),
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '10px',
+                  fontWeight: '600',
+                  lineHeight: '24px',
                 }}
-                {...props}
-              />
+              >
+                {props.useExternalLabel && <p>{props.label}</p>}
+                <TextField
+                  value={field.value}
+                  onChange={field.onChange}
+                  onBlur={field.onBlur}
+                  type={showPassword ? 'text' : 'password'}
+                  error={Boolean(props?.errorText)}
+                  helperText={props?.errorText}
+                  sx={{ backgroundColor: 'white' }}
+                  InputProps={{
+                    autoComplete: 'off',
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton
+                          edge="end"
+                          onMouseDown={handleMouseDown}
+                          onMouseUp={handleMouseDown}
+                          onClick={togglePasswordVisibility}
+                        >
+                          {showPassword ? (
+                            <AiFillEyeInvisible />
+                          ) : (
+                            <AiFillEye />
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                  {...props}
+                  label={props.useExternalLabel ? '' : props.label}
+                />
+              </div>
             );
           }}
         />

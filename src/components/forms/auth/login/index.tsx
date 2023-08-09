@@ -9,6 +9,7 @@ import { Box, Button, FormHelperText, Grid } from '@mui/material';
 import FormTextField from '@src/components/inputs/FormTextField';
 import PasswordInput from '@src/components/inputs/PasswordInput';
 import { useEffect, useRef } from 'react';
+import * as S from './styles';
 
 const LoginForm = () => {
   const {
@@ -19,10 +20,7 @@ const LoginForm = () => {
     getValues,
     formState: { errors },
   } = useForm<ILoginForm>({
-    defaultValues: {
-      document: '',
-      password: '',
-    },
+    defaultValues: loginFormDefaultValues,
     resolver: yupResolver(loginSchema),
   });
   const ref = useRef<HTMLDivElement>(null);
@@ -48,7 +46,7 @@ const LoginForm = () => {
   return (
     <Box className="content-right" ref={ref}>
       <form autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
-        <Grid item xs={12} sm={8}>
+        <S.FormContainer>
           <FormTextField
             control={control}
             autoFocus
@@ -59,21 +57,21 @@ const LoginForm = () => {
             useExternalLabel
             errorText={errors.document?.message}
           />
-        </Grid>
-        <PasswordInput
-          control={control}
-          name="password"
-          fullWidth
-          label="Senha"
-          errorText={errors.password?.message}
-        />
 
-        {errors.password && (
-          <FormHelperText sx={{ color: 'error.main' }} id="">
-            {errors.password.message}
-          </FormHelperText>
-        )}
+          <PasswordInput
+            control={control}
+            name="password"
+            fullWidth
+            label="Senha"
+            errorText={errors.password?.message}
+          />
 
+          {errors.password && (
+            <FormHelperText sx={{ color: 'error.main' }} id="">
+              {errors.password.message}
+            </FormHelperText>
+          )}
+        </S.FormContainer>
         <Button type="submit" size="large" variant="contained" sx={{ mb: 7 }}>
           Entrar
         </Button>
